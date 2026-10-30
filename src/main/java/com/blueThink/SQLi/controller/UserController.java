@@ -4,14 +4,13 @@ import com.blueThink.SQLi.dto.UserDTO;
 import com.blueThink.SQLi.entity.User;
 import com.blueThink.SQLi.service.UserService;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/user")
 public class UserController {
-    private UserService userService;
+    private final UserService userService;
     public UserController(UserService userService){
         this.userService = userService;
     }
@@ -21,7 +20,7 @@ public class UserController {
         return ResponseEntity.ok(userService.registerUser(user));
     }
 
-    @GetMapping("/login")
+    @PostMapping("/login")
     public ResponseEntity<UserDTO> login(@RequestParam String userName,
                                          @RequestParam String password){
         return new ResponseEntity<>(userService.loginUser(userName, password), HttpStatus.OK);
